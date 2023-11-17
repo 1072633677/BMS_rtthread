@@ -1,0 +1,140 @@
+{
+    "global": {
+        "use-micro-lib": true,
+        "output-debug-info": true,
+        "build-output-dir": "./.rtt-studio/Debug\\",
+        "list-output-dir": ".\\",
+        "mem-layout": {
+            "rom": [
+                {
+                    "name": "rom1",
+                    "checked": false,
+                    "address": "0x0",
+                    "size": "0x0",
+                    "is_entry": false
+                },
+                {
+                    "name": "rom2",
+                    "checked": false,
+                    "address": "0x0",
+                    "size": "0x0",
+                    "is_entry": false
+                },
+                {
+                    "name": "rom3",
+                    "checked": false,
+                    "address": "0x0",
+                    "size": "0x0",
+                    "is_entry": false
+                },
+                {
+                    "name": "irom1",
+                    "checked": true,
+                    "address": "0x8000000",
+                    "size": "0x10000",
+                    "is_entry": true
+                },
+                {
+                    "name": "irom2",
+                    "checked": false,
+                    "address": "0x0",
+                    "size": "0x0",
+                    "is_entry": false
+                }
+            ],
+            "ram": [
+                {
+                    "name": "ram1",
+                    "checked": false,
+                    "noInit": false,
+                    "address": "0x0",
+                    "size": "0x0"
+                },
+                {
+                    "name": "ram2",
+                    "checked": false,
+                    "noInit": false,
+                    "address": "0x0",
+                    "size": "0x0"
+                },
+                {
+                    "name": "ram3",
+                    "checked": false,
+                    "noInit": false,
+                    "address": "0x0",
+                    "size": "0x0"
+                },
+                {
+                    "name": "iram1",
+                    "checked": true,
+                    "noInit": false,
+                    "address": "0x20000000",
+                    "size": "0x5000"
+                },
+                {
+                    "name": "iram2",
+                    "checked": false,
+                    "noInit": false,
+                    "address": "0x0",
+                    "size": "0x0"
+                }
+            ]
+        }
+    },
+    "c/cpp": {
+        "include-list": [
+            "../Core/Inc",
+            "../Drivers/STM32F1xx_HAL_Driver/Inc",
+            "../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy",
+            "../Drivers/CMSIS/Device/ST/STM32F1xx/Include",
+            "../Drivers/CMSIS/Include",
+            "../User/Drivers",
+            "../RT-Thread",
+            "../Middlewares/Third_Party/RealThread_RTOS/include/",
+            "../Middlewares/Third_Party/RealThread_RTOS/bsp/_template/cubemx_config",
+            "../Middlewares/Third_Party/RealThread_RTOS/finsh/",
+            "../Middlewares/Third_Party/RealThread_RTOS/components/finsh",
+            "../User/Bms",
+            "..\\User\\Bms\\Core",
+            "../User/Bms/Hal",
+            "../User"
+        ],
+        "define-list": [
+            "USE_HAL_DRIVER",
+            "STM32F103xB"
+        ],
+        "misc-controls": "",
+        "execute-only-code": false,
+        "read-only-position-independent": false,
+        "read-write-position-independent": false,
+        "split-load-and-store-multiple": false,
+        "c99-mode": true,
+        "optimization": 1,
+        "optimize-for-time": false,
+        "one-elf-section-per-function": true,
+        "strict-ansi-c": false,
+        "enum-container-always-int": false,
+        "plain-char-is-signed": false,
+        "gnu-extensions": false,
+        "warnings": 2
+    },
+    "asm": {
+        "include-list": [],
+        "define-list": [],
+        "misc-controls": "",
+        "execute-only-code": false,
+        "read-only-position-independent": false,
+        "read-write-position-independent": false,
+        "split-load-and-store-multiple": false,
+        "thumb-mode": false,
+        "no-warnings": false
+    },
+    "linker": {
+        "auto-gen-scatter-file": true,
+        "linker-scatter-file": "",
+        "misc-controls": "",
+        "read-only-position-independent": false,
+        "read-write-position-independent": false,
+        "not-search-std-libs": false
+    }
+}

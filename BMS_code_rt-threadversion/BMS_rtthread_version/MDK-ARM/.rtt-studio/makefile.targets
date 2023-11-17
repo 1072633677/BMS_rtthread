@@ -1,0 +1,14 @@
+RM := rm -rf
+BRIDGE_EXE := studio-mdk-bridge.exe
+UV4_EXE := "F:\MDK5\UV4\UV4.exe"
+UVPROJX_LOC := "F:\BMS_project\BMS_rtthread_version\MDK-ARM\BMS.uvprojx"
+
+.PHONY: mdk_all
+
+mdk_all:
+	-$(BRIDGE_EXE) --build --uv4-path $(UV4_EXE) $(UVPROJX_LOC)
+
+mdk_clean:
+	-@$(RM) *
+	@echo 'success'
+

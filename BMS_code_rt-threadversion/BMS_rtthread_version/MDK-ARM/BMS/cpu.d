@@ -1,0 +1,10 @@
+bms\cpu.o: ../Middlewares/Third_Party/RealThread_RTOS/src/cpu.c
+bms\cpu.o: ../Middlewares/Third_Party/RealThread_RTOS/include/rtthread.h
+bms\cpu.o: ../RT-Thread/rtconfig.h
+bms\cpu.o: ../Middlewares/Third_Party/RealThread_RTOS/finsh/finsh_config.h
+bms\cpu.o: ../Middlewares/Third_Party/RealThread_RTOS/include/rtdebug.h
+bms\cpu.o: ../Middlewares/Third_Party/RealThread_RTOS/include/rtdef.h
+bms\cpu.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdarg.h
+bms\cpu.o: ../Middlewares/Third_Party/RealThread_RTOS/include/rtservice.h
+bms\cpu.o: ../Middlewares/Third_Party/RealThread_RTOS/finsh/finsh_api.h
+bms\cpu.o: ../Middlewares/Third_Party/RealThread_RTOS/include/rthw.h

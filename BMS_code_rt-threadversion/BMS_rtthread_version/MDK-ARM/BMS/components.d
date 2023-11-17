@@ -1,0 +1,10 @@
+bms\components.o: ../Middlewares/Third_Party/RealThread_RTOS/src/components.c
+bms\components.o: ../Middlewares/Third_Party/RealThread_RTOS/include/rthw.h
+bms\components.o: ../Middlewares/Third_Party/RealThread_RTOS/include/rtthread.h
+bms\components.o: ../RT-Thread/rtconfig.h
+bms\components.o: ../Middlewares/Third_Party/RealThread_RTOS/finsh/finsh_config.h
+bms\components.o: ../Middlewares/Third_Party/RealThread_RTOS/include/rtdebug.h
+bms\components.o: ../Middlewares/Third_Party/RealThread_RTOS/include/rtdef.h
+bms\components.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdarg.h
+bms\components.o: ../Middlewares/Third_Party/RealThread_RTOS/include/rtservice.h
+bms\components.o: ../Middlewares/Third_Party/RealThread_RTOS/finsh/finsh_api.h

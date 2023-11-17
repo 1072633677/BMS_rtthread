@@ -1,0 +1,13 @@
+---- rt_current_thread Matches (12 in 2 files) ----
+scheduler.c (F:\BMS_project\BMS_rtthread_version\Middlewares\Third_Party\RealThread_RTOS\src) line 47 : struct rt_thread *rt_current_thread = RT_NULL;
+rt_system_scheduler_init in scheduler.c (F:\BMS_project\BMS_rtthread_version\Middlewares\Third_Party\RealThread_RTOS\src) :     rt_current_thread = RT_NULL;
+rt_system_scheduler_start in scheduler.c (F:\BMS_project\BMS_rtthread_version\Middlewares\Third_Party\RealThread_RTOS\src) :     rt_current_thread = to_thread;
+rt_schedule in scheduler.c (F:\BMS_project\BMS_rtthread_version\Middlewares\Third_Party\RealThread_RTOS\src) :         if (to_thread != rt_current_thread)
+rt_schedule in scheduler.c (F:\BMS_project\BMS_rtthread_version\Middlewares\Third_Party\RealThread_RTOS\src) :             from_thread         = rt_current_thread;
+rt_schedule in scheduler.c (F:\BMS_project\BMS_rtthread_version\Middlewares\Third_Party\RealThread_RTOS\src) :             rt_current_thread   = to_thread;
+rt_exit_critical in scheduler.c (F:\BMS_project\BMS_rtthread_version\Middlewares\Third_Party\RealThread_RTOS\src) :         if (rt_current_thread)
+thread.c (F:\BMS_project\BMS_rtthread_version\Middlewares\Third_Party\RealThread_RTOS\src) line 35 : extern struct rt_thread *rt_current_thread;
+rt_thread_exit in thread.c (F:\BMS_project\BMS_rtthread_version\Middlewares\Third_Party\RealThread_RTOS\src) :     thread = rt_current_thread;
+rt_thread_self in thread.c (F:\BMS_project\BMS_rtthread_version\Middlewares\Third_Party\RealThread_RTOS\src) :     return rt_current_thread;
+rt_thread_yield in thread.c (F:\BMS_project\BMS_rtthread_version\Middlewares\Third_Party\RealThread_RTOS\src) :     thread = rt_current_thread;
+rt_thread_sleep in thread.c (F:\BMS_project\BMS_rtthread_version\Middlewares\Third_Party\RealThread_RTOS\src) :     thread = rt_current_thread;
