@@ -1,12 +1,12 @@
 #include "bms_utils.h"
 
 
-// ²éÕÒÒ»¸öÊıÊÇ·ñ´æÔÚÊı×éÖĞ
+// æŸ¥æ‰¾ä¸€ä¸ªæ•°æ˜¯å¦å­˜åœ¨æ•°ç»„ä¸­
 int binarySearch(uint16_t *nums, uint8_t left, uint8_t right, uint16_t target)  
 {
     while (left <= right) 
 	{ 
-		// ×¢Òâ
+		// æ³¨æ„
         int mid = (right + left) / 2;
 			
         if(nums[mid] == target)
@@ -15,20 +15,20 @@ int binarySearch(uint16_t *nums, uint8_t left, uint8_t right, uint16_t target)
 		}
         else if (nums[mid] < target)
 		{
-            left = mid + 1; // ×¢Òâ
+            left = mid + 1; // æ³¨æ„
 		}
         else if (nums[mid] > target)
 		{
-            right = mid - 1; // ×¢Òâ
+            right = mid - 1; // æ³¨æ„
         }
 	}
     return -1;
 }
 
-// ²éÕÒÒ»¸öÊıÔÚÊı×éÖĞµÄÓÒ²à±ß½ç(¶ş·Ö·¨)
-// start_pos£ºÆğÊ¼Î»ÖÃ
-// end_pos£º½áÊøÎ»ÖÃ
-// ·µ»Ø-1£º±íÊ¾²»´æÔÚÕâ¸öÊı
+// æŸ¥æ‰¾ä¸€ä¸ªæ•°åœ¨æ•°ç»„ä¸­çš„å³ä¾§è¾¹ç•Œ(äºŒåˆ†æ³•)
+// start_posï¼šèµ·å§‹ä½ç½®
+// end_posï¼šç»“æŸä½ç½®
+// è¿”å›-1ï¼šè¡¨ç¤ºä¸å­˜åœ¨è¿™ä¸ªæ•°
 int right_bound(uint16_t *nums, uint8_t start_pos, uint8_t end_pos, uint16_t target) 
 {
 	uint16_t left = start_pos;
@@ -40,7 +40,7 @@ int right_bound(uint16_t *nums, uint8_t start_pos, uint8_t end_pos, uint16_t tar
 		
         if (nums[mid] == target) 
 		{
-            left = mid + 1; // ×¢Òâ
+            left = mid + 1; // æ³¨æ„
         } 
 		else if (nums[mid] < target) 
 		{
@@ -55,13 +55,13 @@ int right_bound(uint16_t *nums, uint8_t start_pos, uint8_t end_pos, uint16_t tar
 	{
 		return -1;
 	}
-    return left - 1; // ×¢Òâ
+    return left - 1; // æ³¨æ„
 }
 
-// ²éÕÒÒ»¸öÊıÔÚÊı×éÖĞµÄ×ó²à±ß½ç(¶ş·Ö·¨)
-// start_pos£ºÆğÊ¼Î»ÖÃ
-// end_pos£º½áÊøÎ»ÖÃ
-// ·µ»Ø-1£º±íÊ¾²»´æÔÚÕâ¸öÊı
+// æŸ¥æ‰¾ä¸€ä¸ªæ•°åœ¨æ•°ç»„ä¸­çš„å·¦ä¾§è¾¹ç•Œ(äºŒåˆ†æ³•)
+// start_posï¼šèµ·å§‹ä½ç½®
+// end_posï¼šç»“æŸä½ç½®
+// è¿”å›-1ï¼šè¡¨ç¤ºä¸å­˜åœ¨è¿™ä¸ªæ•°
 int left_bound(uint16_t *nums, uint16_t start_pos, uint16_t end_pos, uint16_t target) 
 {
 	uint16_t left = start_pos;
@@ -69,7 +69,7 @@ int left_bound(uint16_t *nums, uint16_t start_pos, uint16_t end_pos, uint16_t ta
 	
     while (left < right) 
 	{ 
-		// ×¢Òâ
+		// æ³¨æ„
         int mid = (left + right) / 2;
 		
         if (nums[mid] == target) 
@@ -82,7 +82,7 @@ int left_bound(uint16_t *nums, uint16_t start_pos, uint16_t end_pos, uint16_t ta
         } 
 		else if (nums[mid] > target) 
 		{
-            right = mid; // ×¢Òâ
+            right = mid; // æ³¨æ„
         }
     }
 	
@@ -95,7 +95,7 @@ int left_bound(uint16_t *nums, uint16_t start_pos, uint16_t end_pos, uint16_t ta
 
 
 
-// Ã°ÅİÅÅĞòfloatÀàĞÍ
+// å†’æ³¡æ’åºfloatç±»å‹
 void BubbleFloat(float a[], uint32_t n)
 {
 	float t;
@@ -182,7 +182,7 @@ int cmp_double(const void *e1, const void *e2)
 }
 
 
-// ½»»»ÔªËØ,ÈÎÒâÀàĞÍ
+// äº¤æ¢å…ƒç´ ,ä»»æ„ç±»å‹
 void swap(uint8_t *buf1, uint8_t *buf2, uint32_t width)
 {
 	uint8_t temp;
@@ -199,12 +199,12 @@ void swap(uint8_t *buf1, uint8_t *buf2, uint32_t width)
 }
 
 
-// Ã°ÅİÅÅĞò,ÈÎÒâÀàĞÍ
-// base£º	»ùµØÖ·
-// sz:		ÒªÅÅĞòÔªËØ¸öÊı
-// width:	µ¥¸öÔªËØµÄ¿í¶È
-// cmp:		²»Ã÷È·ÀàĞÍµÄÇé¿öÏÂ,Á½¸öÊı¾İµÄ¶Ô±È½á¹û±ØĞëÓÉÓÃ»§Íê³É
-//			Èç¹ûe1±Èe2´óÔòcmpÓ¦·µ»Ø´óÓÚ0µÄÊı,·´Ö®Ôò·µ»ØĞ¡ÓÚµÈÓÚ0µÄÊı
+// å†’æ³¡æ’åº,ä»»æ„ç±»å‹
+// baseï¼š	åŸºåœ°å€
+// sz:		è¦æ’åºå…ƒç´ ä¸ªæ•°
+// width:	å•ä¸ªå…ƒç´ çš„å®½åº¦
+// cmp:		ä¸æ˜ç¡®ç±»å‹çš„æƒ…å†µä¸‹,ä¸¤ä¸ªæ•°æ®çš„å¯¹æ¯”ç»“æœå¿…é¡»ç”±ç”¨æˆ·å®Œæˆ
+//			å¦‚æœe1æ¯”e2å¤§åˆ™cmpåº”è¿”å›å¤§äº0çš„æ•°,åä¹‹åˆ™è¿”å›å°äºç­‰äº0çš„æ•°
 void BubbleSort(void *base, uint32_t sz, uint32_t width, int (*cmp)(void *e1, void *e2))
 {
     uint32_t i = 0, j = 0;
@@ -227,7 +227,7 @@ void BubbleSort(void *base, uint32_t sz, uint32_t width, int (*cmp)(void *e1, vo
 
 /*
 
-ÏÂÃæÊÇÈÎÒâÀàĞÍÊı¾İÃ°ÅÅĞòµÄ²âÊÔ´úÂë
+ä¸‹é¢æ˜¯ä»»æ„ç±»å‹æ•°æ®å†’æ’åºçš„æµ‹è¯•ä»£ç 
 
 
 
@@ -237,16 +237,16 @@ void BubbleSort(void *base, uint32_t sz, uint32_t width, int (*cmp)(void *e1, vo
 
 typedef struct
 {
-	float CellVoltage; 	// µçĞ¾µçÑ¹
-	uint8_t CellNumber;	// µçĞ¾µÄ±àºÅ
+	float CellVoltage; 	// ç”µèŠ¯ç”µå‹
+	uint8_t CellNumber;	// ç”µèŠ¯çš„ç¼–å·
 }BMS_CellDataTypedef;
 
 typedef struct
 {
-	float CellTemp[BMS_TEMP_MAX];					// ²ÉÑùÎÂ¶È,ÎÂ¶ÈÊı¾İ»á´ÓĞ¡µ½´óÅÅĞò
-	float BatteryVoltage;							// µç³Ø×ÜµçÑ¹
-	float BatteryCurrent;							// µç³Ø×éµçÁ÷
-	BMS_CellDataTypedef CellData[BMS_CELL_MAX]; 	// µçĞ¾µçÑ¹,µçÑ¹Êı¾İ»á´ÓĞ¡µ½´óÅÅĞò
+	float CellTemp[BMS_TEMP_MAX];					// é‡‡æ ·æ¸©åº¦,æ¸©åº¦æ•°æ®ä¼šä»å°åˆ°å¤§æ’åº
+	float BatteryVoltage;							// ç”µæ± æ€»ç”µå‹
+	float BatteryCurrent;							// ç”µæ± ç»„ç”µæµ
+	BMS_CellDataTypedef CellData[BMS_CELL_MAX]; 	// ç”µèŠ¯ç”µå‹,ç”µå‹æ•°æ®ä¼šä»å°åˆ°å¤§æ’åº
 }BMS_SampleDataTypedef;
 
 

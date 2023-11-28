@@ -9,29 +9,29 @@
 
 typedef struct
 {
-	// ÕâÈı¸öÖµÄ¿Ç°²»ÓÃ¹Ü
-	uint8_t SOH;	// µç³Ø°üSOHÖµ			Êµ¼ÊÈİÁ¿/¶î¶¨ÈİÁ¿
-	uint8_t SOP;	// µç³Ø°üSOPÖµ	
-	uint8_t SOE;	// µç³Ø°üSOEÖµ
+	// è¿™ä¸‰ä¸ªå€¼ç›®å‰ä¸ç”¨ç®¡
+	uint8_t SOH;	// ç”µæ± åŒ…SOHå€¼			å®é™…å®¹é‡/é¢å®šå®¹é‡
+	uint8_t SOP;	// ç”µæ± åŒ…SOPå€¼	
+	uint8_t SOE;	// ç”µæ± åŒ…SOEå€¼
 
 
-	// Ä¿Ç°ÕâÁ½¸öÖµ»¹Î´×ö,µÈºóÃæÔÙÊµÏÖÁË
-	uint32_t LoopCount;			// µç³Ø°üÑ­»·´ÎÊı(ÍêÕûµÄÒ»¸ö³ä·Å¹ı³Ì+1)
-	float CapacityLoop;			// µç³Ø°üÑ­»·ÈİÁ¿(A/H)
+	// ç›®å‰è¿™ä¸¤ä¸ªå€¼è¿˜æœªåš,ç­‰åé¢å†å®ç°äº†
+	uint32_t LoopCount;			// ç”µæ± åŒ…å¾ªç¯æ¬¡æ•°(å®Œæ•´çš„ä¸€ä¸ªå……æ”¾è¿‡ç¨‹+1)
+	float CapacityLoop;			// ç”µæ± åŒ…å¾ªç¯å®¹é‡(A/H)
 	
 
-	// ÏÂÃæµÄÖµÒÑ¾­ÊµÏÖÁË
-	float SOC;					// µç³Ø°üSOCÖµ(Ê£ÓàµçÁ¿°Ù·Ö±È)
+	// ä¸‹é¢çš„å€¼å·²ç»å®ç°äº†
+	float SOC;					// ç”µæ± åŒ…SOCå€¼(å‰©ä½™ç”µé‡ç™¾åˆ†æ¯”)
 
-	float AverageVoltage;		// µ¥ÌåÆ½¾ùµçÑ¹Öµ(V)
-	float MaxVoltageDifference;	// µ¥ÌåµçĞ¾×î´óµçÑ¹²î(V)
-	float PowerReal;			// µç³Ø°üÊµÊ±¹¦ÂÊ(W)
-	float CellVoltMax;			// µ¥ÌåµçĞ¾×î´óµçÑ¹
-	float CellVoltMin;			// µ¥ÌåµçĞ¾×îĞ¡µçÑ¹
+	float AverageVoltage;		// å•ä½“å¹³å‡ç”µå‹å€¼(V)
+	float MaxVoltageDifference;	// å•ä½“ç”µèŠ¯æœ€å¤§ç”µå‹å·®(V)
+	float PowerReal;			// ç”µæ± åŒ…å®æ—¶åŠŸç‡(W)
+	float CellVoltMax;			// å•ä½“ç”µèŠ¯æœ€å¤§ç”µå‹
+	float CellVoltMin;			// å•ä½“ç”µèŠ¯æœ€å°ç”µå‹
 	
-	float CapacityRated;		// µç³Ø°ü¶î¶¨ÈİÁ¿(A/H)
-	float CapacityReal;			// µç³Ø°üÊµÊ±ÈİÁ¿(A/H)  		¼ÆËã·½·¨µÃ½øĞĞÒ»´ÎÍêÕûµÄ³ä·Åµç¼ÆËã
-	float CapacityRemain;		// µç³Ø°üÊ£ÓàÈİÁ¿(A/H)
+	float CapacityRated;		// ç”µæ± åŒ…é¢å®šå®¹é‡(A/H)
+	float CapacityReal;			// ç”µæ± åŒ…å®æ—¶å®¹é‡(A/H)  		è®¡ç®—æ–¹æ³•å¾—è¿›è¡Œä¸€æ¬¡å®Œæ•´çš„å……æ”¾ç”µè®¡ç®—
+	float CapacityRemain;		// ç”µæ± åŒ…å‰©ä½™å®¹é‡(A/H)
 }BMS_AnalysisDataTypedef;
 
 

@@ -1,6 +1,6 @@
 /**************************************************************************/
-/*********** ¸Ãi2cÇı¶¯´ÓrttµÄi2cÇı¶¯¿ò¼ÜÒÆÖ²¶øÀ´,ÌŞ³ıÁËdevice²ã ***********/
-/**** ¿¼ÂÇÁË²¢·¢Çé¿ö,¿¼ÂÇµ½Æ¬ÄÚ×ÊÔ´µ¥¶ÀÅÜosÄÚºËµÄÇé¿ö¿ÉÒÔÓÃ,²¢²»Õ¼×ÊÔ´ ****/
+/*********** è¯¥i2cé©±åŠ¨ä»rttçš„i2cé©±åŠ¨æ¡†æ¶ç§»æ¤è€Œæ¥,å‰”é™¤äº†deviceå±‚ ***********/
+/**** è€ƒè™‘äº†å¹¶å‘æƒ…å†µ,è€ƒè™‘åˆ°ç‰‡å†…èµ„æºå•ç‹¬è·‘oså†…æ ¸çš„æƒ…å†µå¯ä»¥ç”¨,å¹¶ä¸å èµ„æº ****/
 /**************************************************************************/
 
 
@@ -11,9 +11,9 @@
 #include "main.h"
 
 
-// Ê¹ÓÃ»¥³âËø»á±»¸ßÓÅÏÈ¼¶ÈÎÎñÇÀÕ¼
-// Å¼·¢ĞÔµÄµ¼ÖÂi2cĞÅºÅ´«ÊäÒ»°ëµÄÊ±ºò¾ÍÅÜÈ¥×öÆäËûµÄ
-// ×îºóµ¼ÖÂ¶ÁĞ´i2cÊı¾İ²»¶Ô½ø¶øBQĞ¾Æ¬Çı¶¯µÄCRCÍ¨²»¹ı
+// ä½¿ç”¨äº’æ–¥é”ä¼šè¢«é«˜ä¼˜å…ˆçº§ä»»åŠ¡æŠ¢å 
+// å¶å‘æ€§çš„å¯¼è‡´i2cä¿¡å·ä¼ è¾“ä¸€åŠçš„æ—¶å€™å°±è·‘å»åšå…¶ä»–çš„
+// æœ€åå¯¼è‡´è¯»å†™i2cæ•°æ®ä¸å¯¹è¿›è€ŒBQèŠ¯ç‰‡é©±åŠ¨çš„CRCé€šä¸è¿‡
 //static struct rt_mutex mutex1 ={0};
 
 static rt_uint32_t level;
@@ -38,19 +38,19 @@ static void I2C1_Unlock(void)
     rt_hw_interrupt_enable(level);
 }
 
-// ÊÊÓÃÓÚ72MHZ
+// é€‚ç”¨äº72MHZ
 static void delay_us(uint32_t us)
 {
 	uint16_t i = 0;
 	
 	while(us--)
 	{
-		i = 10; //×Ô¼º¶¨Òå
+		i = 10; //è‡ªå·±å®šä¹‰
 		while(i--);
 	}
 }
 
-// i2c×ÜÏß¾ä±ú
+// i2cæ€»çº¿å¥æŸ„
 struct I2C_BusTypeDef i2c1 = 
 {
 	.gpiox = I2C1_SCL_GPIO_Port,
@@ -94,8 +94,8 @@ static inline void SDA_SetOutMode(struct I2C_BusTypeDef *bus)
 	HAL_GPIO_Init(bus->gpiox, &GPIO_InitStruct);
 }
 
-// stm32µÄIO¿Ú½á¹¹Êä³öÄ£Ê½ÏÂÊÇÃ»ÓĞ¹Ø¶ÏÊäÈë²¿·ÖµÄĞ¤ÌØ»ù´¥·¢Æ÷,Êı¾İÒÀÈ»»á¶ÁÈëÊäÈë¼Ä´æÆ÷,¹Ê²»ÓÃÉèÖÃSDAÊäÈëÄ£Ê½
-// µ«ÎªÁË±£ÏÕÆğ¼û×îºÃ»¹ÊÇĞ´ÉÏ,Ò²ÎªÁË·½±ã½«¸ÃÇı¶¯ÒÆÖ²µ½ÆäËûÆ½Ì¨»òÕßHAL¿âÉÏ
+// stm32çš„IOå£ç»“æ„è¾“å‡ºæ¨¡å¼ä¸‹æ˜¯æ²¡æœ‰å…³æ–­è¾“å…¥éƒ¨åˆ†çš„è‚–ç‰¹åŸºè§¦å‘å™¨,æ•°æ®ä¾ç„¶ä¼šè¯»å…¥è¾“å…¥å¯„å­˜å™¨,æ•…ä¸ç”¨è®¾ç½®SDAè¾“å…¥æ¨¡å¼
+// ä½†ä¸ºäº†ä¿é™©èµ·è§æœ€å¥½è¿˜æ˜¯å†™ä¸Š,ä¹Ÿä¸ºäº†æ–¹ä¾¿å°†è¯¥é©±åŠ¨ç§»æ¤åˆ°å…¶ä»–å¹³å°æˆ–è€…HALåº“ä¸Š
 static inline void SDA_SetInMode(struct I2C_BusTypeDef *bus)
 {
 	GPIO_InitTypeDef GPIO_InitStruct;
@@ -231,7 +231,7 @@ static uint16_t I2C_SendBytes(struct I2C_BusTypeDef *bus, struct I2C_MessageType
 	
 	while (count > 0)
 	{
-		if (msg->flags & I2C_CONTROL_BYTE && I2C_WriteByte(bus, msg->cByte) == 0) // ·¢ËÍ¿ØÖÆ×Ö½Ú
+		if (msg->flags & I2C_CONTROL_BYTE && I2C_WriteByte(bus, msg->cByte) == 0) // å‘é€æ§åˆ¶å­—èŠ‚
 		{
 			I2C_WARNING("send bytes: NACK.");
 			break;
@@ -364,7 +364,7 @@ static uint8_t I2C_BitSendAddress(struct I2C_BusTypeDef *bus, struct I2C_Message
 	return 1;
 }
 
-/* ´«ÊäÏûÏ¢,Èç¹û´«Êä³É¹¦·µ»Ø×ÜµÄÏûÏ¢ÊıÁ¿,Ê§°Ü·µ»Ø0 */
+/* ä¼ è¾“æ¶ˆæ¯,å¦‚æœä¼ è¾“æˆåŠŸè¿”å›æ€»çš„æ¶ˆæ¯æ•°é‡,å¤±è´¥è¿”å›0 */
 uint32_t I2C_TransferMessages(struct I2C_BusTypeDef *bus, struct I2C_MessageTypeDef msgs[], uint32_t num)
 {
 	struct I2C_MessageTypeDef *msg;

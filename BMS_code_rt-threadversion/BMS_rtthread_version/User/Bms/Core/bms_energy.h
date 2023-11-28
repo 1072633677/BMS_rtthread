@@ -9,15 +9,15 @@
 
 typedef struct
 {
-	float SocStopChg;			// Í£Ö¹³äµçSOCÖµ
-	float SocStartChg;			// Æô¶¯³äµçSOCÖµ
-	float SocStopDsg;			// Í£Ö¹·ÅµçSOCÖµ
-	float SocStartDsg;			// Æô¶¯·ÅµçSOCÖµ
+	float SocStopChg;			// åœæ­¢å……ç”µSOCå€¼
+	float SocStartChg;			// å¯åŠ¨å……ç”µSOCå€¼
+	float SocStopDsg;			// åœæ­¢æ”¾ç”µSOCå€¼
+	float SocStartDsg;			// å¯åŠ¨æ”¾ç”µSOCå€¼
 	
-	float BalanceStartVoltage;	// ¾ùºâÆğÊ¼µçÑ¹(V)
-	float BalanceDiffeVoltage;	// ¾ùºâ²îÒìµçÑ¹(V)
-	uint32_t BalanceCycleTime;	// ¾ùºâÖÜÆÚÊ±¼ä(s)
-	BMS_CellIndexTypedef BalanceRecord;	// ¾ùºâ¼ÇÂ¼,ÕıÔÚ¾ùºâµÄ»á±»Î»ÓëÉÏ
+	float BalanceStartVoltage;	// å‡è¡¡èµ·å§‹ç”µå‹(V)
+	float BalanceDiffeVoltage;	// å‡è¡¡å·®å¼‚ç”µå‹(V)
+	uint32_t BalanceCycleTime;	// å‡è¡¡å‘¨æœŸæ—¶é—´(s)
+	BMS_CellIndexTypedef BalanceRecord;	// å‡è¡¡è®°å½•,æ­£åœ¨å‡è¡¡çš„ä¼šè¢«ä½ä¸ä¸Š
 	
 }BMS_EnergyDataTypedef;
 

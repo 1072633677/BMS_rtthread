@@ -14,26 +14,26 @@ void CAN_Initialize(void)
 
 	CAN_PwrState(CAN_ENABLE_PWR);
 	
-    filter.FilterActivation = ENABLE;				// ÊÇ·ñÊ¹ÄÜÉ¸Ñ¡Æ÷
-    filter.FilterMode = CAN_FILTERMODE_IDMASK;		// É¸Ñ¡Æ÷Ä£Ê½
-    filter.FilterScale = CAN_FILTERSCALE_32BIT;		// É¸Ñ¡Æ÷µÄÎ»Êı
-    filter.FilterBank = 0;							// É¸Ñ¡Æ÷±àºÅ
-    filter.FilterFIFOAssignment = CAN_FILTER_FIFO0;	// ÉèÖÃ¾­¹ıÉ¸Ñ¡ºóÊı¾İ´æ´¢µ½ÄÄ¸ö½ÓÊÕ FIFO
-    filter.FilterIdLow = 0;			// CAN_FxR1 ¼Ä´æÆ÷µÄµÍ 16 Î»
-    filter.FilterIdHigh = 0;		// CAN_FxR1 ¼Ä´æÆ÷µÄ¸ß 16 Î»
-    filter.FilterMaskIdLow = 0;		// CAN_FxR2 ¼Ä´æÆ÷µÄµÍ 16 Î»
-	filter.FilterMaskIdHigh = 0;	// CAN_FxR2 ¼Ä´æÆ÷µÄ¸ß 16 Î»
+    filter.FilterActivation = ENABLE;				// æ˜¯å¦ä½¿èƒ½ç­›é€‰å™¨
+    filter.FilterMode = CAN_FILTERMODE_IDMASK;		// ç­›é€‰å™¨æ¨¡å¼
+    filter.FilterScale = CAN_FILTERSCALE_32BIT;		// ç­›é€‰å™¨çš„ä½æ•°
+    filter.FilterBank = 0;							// ç­›é€‰å™¨ç¼–å·
+    filter.FilterFIFOAssignment = CAN_FILTER_FIFO0;	// è®¾ç½®ç»è¿‡ç­›é€‰åæ•°æ®å­˜å‚¨åˆ°å“ªä¸ªæ¥æ”¶ FIFO
+    filter.FilterIdLow = 0;			// CAN_FxR1 å¯„å­˜å™¨çš„ä½ 16 ä½
+    filter.FilterIdHigh = 0;		// CAN_FxR1 å¯„å­˜å™¨çš„é«˜ 16 ä½
+    filter.FilterMaskIdLow = 0;		// CAN_FxR2 å¯„å­˜å™¨çš„ä½ 16 ä½
+	filter.FilterMaskIdHigh = 0;	// CAN_FxR2 å¯„å­˜å™¨çš„é«˜ 16 ä½
 
-	// ÅäÖÃÂË²¨Æ÷
+	// é…ç½®æ»¤æ³¢å™¨
 	if (HAL_CAN_ConfigFilter(&hcan, &filter) != HAL_OK)
 	{
 		rt_kprintf("CAN Config Filter Fail!\r\n");
 	}
 
-	// ´ò¿ªCAN RX0ÖĞ¶Ï
+	// æ‰“å¼€CAN RX0ä¸­æ–­
 	HAL_CAN_ActivateNotification(&hcan, CAN_IT_RX_FIFO0_MSG_PENDING);  
 
-	// ¿ªÆôCAN
+	// å¼€å¯CAN
 	if (HAL_CAN_Start(&hcan) != HAL_OK)
 	{
 		rt_kprintf("CAN Start Fail!\r\n");
@@ -48,11 +48,11 @@ void CAN_SendData(uint32_t IdType,uint32_t StdId,uint32_t ExtId,uint8_t *pData,u
 	
     CAN_TxHeaderTypeDef TxHeader;
     
-    TxHeader.StdId = StdId;			// ±ê×¼ID
-    TxHeader.ExtId = ExtId;			// À©Õ¹ID
-    TxHeader.IDE = IdType;			// IDÀàĞÍ
-    TxHeader.RTR = CAN_RTR_DATA;	// Êı¾İÖ¡/Ô¶³ÌÖ¡
-    TxHeader.DLC = length;			// Êı¾İ³¤¶È
+    TxHeader.StdId = StdId;			// æ ‡å‡†ID
+    TxHeader.ExtId = ExtId;			// æ‰©å±•ID
+    TxHeader.IDE = IdType;			// IDç±»å‹
+    TxHeader.RTR = CAN_RTR_DATA;	// æ•°æ®å¸§/è¿œç¨‹å¸§
+    TxHeader.DLC = length;			// æ•°æ®é•¿åº¦
 	TxHeader.TransmitGlobalTime = DISABLE;
 	
 	memcpy(buffer, pData, length);

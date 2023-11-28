@@ -69,8 +69,9 @@ static void BMS_AnalysisCalCap(void);
 static void BMS_AnalysisSocCheck(void);
 static void BMS_AnalysisCapAndSocInit(void);
 
-
-
+//SOH和SOP计算函数
+static void BMS_AnalysisSOHCheck(void);
+static void BMS_AnalysisSOPCheck(void);
 
 
 
@@ -102,11 +103,16 @@ void BMS_AnalysisInit(void)
 static void BMS_AnalysisTaskEntry(void *paramter)
 {
 	BMS_AnalysisCapAndSocInit();
+
 	while(1)
 	{			
 		BMS_AnalysisEasy();
 		BMS_AnalysisCalCap();
 		BMS_AnalysisSocCheck();
+
+        BMS_AnalysisSOHCheck();
+        BMS_AnalysisSOPCheck();
+
 		rt_thread_mdelay(ANALYSISI_TASK_PERIOD);
 	}
 }
@@ -294,7 +300,7 @@ static void BMS_AnalysisOcvSocCalculate(void)
 // soc = 实时积分的容量 / 电池包实际容量
 static void BMS_AnalysisAHSocCalculate(void)
 {
-	// abs取绝对值，除3600把 A/S 单位换算成  A/H
+	// 3600是锂电池的标准容量，AH积分法每秒进行一次积分，容量值近似于电流与时间的乘积
 	float CurrentValue = abs((int32_t)(BMS_MonitorData.BatteryCurrent * 1000)) / 1000.0 / 3600;
 
 	
@@ -376,4 +382,5 @@ static void BMS_AnalysisCapAndSocInit(void)
 	// 剩余容量 = 实际容量 * soc
 	BMS_AnalysisData.CapacityRemain = BMS_AnalysisData.CapacityReal * BMS_AnalysisData.SOC; 
 }
+
 

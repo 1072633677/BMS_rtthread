@@ -5,19 +5,19 @@
 #include "drv_soft_i2c.h"
 
 
-// �����ص��ӿ�
+// 报警回调接口
 static BQ769X0_AlertOpsTypedf AlertOps;
 
 
-/* ADC���� */
+/* ADC增益 */
 static float Gain = 0;		
 static int16_t iGain = 0;
 static int8_t Adcoffset;
 
 static uint8_t TemNA = 6;
-static uint8_t TempSampleMode = 0;  // �¶Ȳ���ģʽ 0:��������  1:IC�¶�
+static uint8_t TempSampleMode = 0;  // 温度采样模式 0:热敏电阻  1:IC温度
 //--------20,-16,-12,-8,-4,0,4,8, 100------------//
-// 10K NTC 5% ���������¶�ת����
+// 10K NTC 5% 热敏电阻温度转换表
 static const uint16_t TemD[31] =
 {
 	2890,2817,2735,2642,2541,2431,2318,2202,2127,2007,  
@@ -27,34 +27,34 @@ static const uint16_t TemD[31] =
 
 
 
-// �Ĵ�����
+// 寄存器组
 static RegisterGroup Registers = {0};
 
 
-// 18650 1C�ŵ籶����ָ�����1Сʱʱ���������
-// �����ض����Ϊ2200mA/H ,��ô1C�ŵ������2.2A
-// 18650��·������ֵһ��Ϊ��ص�5C�ŵ�����
-// ��·����һ������Ϊ10A����������ʵ�ʲ���ľ���ֵ��
+// 18650 1C放电倍率是指电池以1小时时间放完额定容量
+// 假如电池额定容量为2200mA/H ,那么1C放电电流是2.2A
+// 18650短路电流阈值一般为电池的5C放电速率
+// 短路电流一般设置为10A（搜索别人实际测过的经验值）
 
 
-// �ŵ��·������ֵ��ѡ��44����89�Ǹ���RSNSλ���õģ�Ϊ1��ӱ���ֵ���򲻼ӱ�
-// ����SCDԤ��Ϊ10A �����ҵĵ�·������������5m��
-// ����  	SCDThresh = 10A * 5m�� = 50mV
-// ����ȡֵӦ��ȡ SCD_THRESH_89mV_44mV  ����RSNS����Ϊ0
-// ȡ44mV ʵ�ʼ��� 44 / 5 = 8.8A �������������ֵ��������
-// ����Ϊ56mV �ŵ��·��ֵ������11.2A
+// 放电短路保护阈值，选择44还是89是根据RSNS位配置的，为1则加倍阈值否则不加倍
+// 假如SCD预设为10A 根据我的电路分流电阻规格是5mΩ
+// 计算  	SCDThresh = 10A * 5mΩ = 50mV
+// 向下取值应该取 SCD_THRESH_89mV_44mV  并且RSNS设置为0
+// 取44mV 实际计算 44 / 5 = 8.8A 这才是真正的阈值保护电流
+// 设置为56mV 放电短路阈值电流是11.2A
 static const uint8_t SCDThresh = SCD_THRESH_89mV_44mV;
 
 
 
 
-// �ŵ����������ֵ��һ������Ϊ2A
-// ѡ��11����22�Ǹ���RSNSλ���õģ�Ϊ1��ӱ���ֵ���򲻼ӱ�
-// ����OCDԤ��Ϊ2.2A �����ҵĵ�·������������5m��
-// ����  	OCDThresh = 2.2A * 5m�� = 11mV
-// ȡֵӦ��ȡ OCD_THRESH_22mV_11mV  ����RSNS����Ϊ0
-// ����Ϊ8mV �ŵ������ֵ������1.6A
-// ����Ϊ14mV �ŵ������ֵ������2.8A
+// 放电过流保护阈值，一般设置为2A
+// 选择11还是22是根据RSNS位配置的，为1则加倍阈值否则不加倍
+// 假如OCD预设为2.2A 根据我的电路分流电阻规格是5mΩ
+// 计算  	OCDThresh = 2.2A * 5mΩ = 11mV
+// 取值应该取 OCD_THRESH_22mV_11mV  并且RSNS设置为0
+// 设置为8mV 放电过流阈值电流是1.6A
+// 设置为14mV 放电过流阈值电流是2.8A
 static const uint8_t OCDThresh = OCD_THRESH_22mV_11mV;
 
 // OCD_THRESH_17mV_8mV  OCD_THRESH_22mV_11mV
@@ -65,43 +65,43 @@ static const uint8_t OCDThresh = OCD_THRESH_22mV_11mV;
 
 
 /*
-// �ŵ��·������ʱʱ��
+// 放电短路保护延时时间
 static const uint8_t SCDDelay = SCD_DELAY_100us;
 
-// �ŵ����������ʱʱ��
+// 放电过流保护延时时间
 static const uint8_t OCDDelay = OCD_DELAY_320ms;
 
-// ��ѹ�����ӳ�
+// 过压保护延迟
 static const uint8_t OVDelay = OV_DELAY_2s;
 
-// Ƿѹ�����ӳ�
+// 欠压保护延迟
 static const uint8_t UVDelay = UV_DELAY_4s;
 
 
 
 
-// ��Ԫ﮺�����������𿴱�Ƶ�ѹ,��Ԫ�:3.6V��3.7V						�������:3.2V
-// ��Ԫ﮹�����ֹ:4.2V  				������﮹�����ֹ:3.6V
-// ��Ԫ﮹��Ž�ֹ:3.2V  				������﮹��Ž�ֹ:2.5V
-// ����ֵֻ����ҵ�ο���﮵�ع��䡢����ֵ���ø��ݵ�����Ҹ���ֵ
+// 三元锂和磷酸铁锂区别看标称电压,三元锂:3.6V或3.7V						磷酸铁锂:3.2V
+// 三元锂过充终止:4.2V  				磷酸铁锂过充终止:3.6V
+// 三元锂过放截止:3.2V  				磷酸铁锂过放截止:2.5V
+// 以上值只是行业参考，锂电池过充、过放值还得根据电池卖家给的值
 
-// BQоƬ�����ù�ѹ������ֵ,��Χ3.15~4.7V
+// BQ芯片可配置过压保护阈值,范围3.15~4.7V
 static const uint16_t  OVPThreshold = 4200;		
 
-// BQоƬ������Ƿѹ������ֵ,��Χ1.58~3.1V
+// BQ芯片可配置欠压保护阈值,范围1.58~3.1V
 static const uint16_t	UVPThreshold = 2900;
 */
 
 
 
 
-// ����������ֵ,��λΪŷ
+// 分流电阻阻值,单位为欧
 static float RsnsValue= 0.005;		
 
 
 
 
-// ��������
+// 传感数据
 BQ769X0_SampleDataTypedef BQ769X0_SampleData = {0};
 
 
@@ -153,7 +153,7 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
 
 /************************************** utils **********************************************/
 
-// ���ɼ�������������ADCֵ��ת����ʵ�ʵ��¶�ֵ
+// 将采集到的热敏电阻ADC值，转换成实际的温度值
 static int16_t TempChange(uint16_t uiADCV)
 {	
 	uint8_t ucA = 32, TemNK = 0;
@@ -226,7 +226,7 @@ static int16_t TempChange(uint16_t uiADCV)
 	return uiD;
 }
 
-// CRC8У��
+// CRC8校验
 static uint8_t CRC8(uint8_t *ptr, uint8_t len, uint8_t key)
 {
 	uint8_t i, crc=0;
@@ -569,9 +569,9 @@ static bool BQ769X0_ReadBlockWithCRC(uint8_t Register, uint8_t *buffer, uint8_t 
 
 
 
-/**************************************** �������ݲɼ� *****************************************/
+/**************************************** 传感数据采集 *****************************************/
 
-/* ���µ��ڵ�о��ѹ 250ms����һ�� */
+/* 更新单节电芯电压 250ms更新一次 */
 void BQ769X0_UpdateCellVolt(void)
 {
 	uint8_t index = 0;
@@ -597,7 +597,7 @@ void BQ769X0_UpdateCellVolt(void)
 }
 
 
-/* ���������¶� 2s����һ�� */
+/* 热敏电阻温度 2s更新一次 */
 void BQ769X0_UpdateTsTemp(void)
 {
 	uint8_t index;
@@ -625,14 +625,14 @@ void BQ769X0_UpdateTsTemp(void)
 	{
 		iTemp = (uint16_t)(*pRawADCData << 8) | *(pRawADCData + 1);
 		v_tsx = (uint32_t)iTemp * 382 / 1000;
-		BQ769X0_SampleData.TsxTemperature[index] = TempChange(v_tsx) / 10.0;	/*�����ǵ���ֵ����Ҫ����NTC��������ݱ�����õ���Ӧ���¶�ֵ*/
+		BQ769X0_SampleData.TsxTemperature[index] = TempChange(v_tsx) / 10.0;	/*现在是电阻值，需要根据NTC电阻的数据表查表得到对应的温度值*/
 		pRawADCData += 2;
 	}
 }
 
 
 
-/* ��ȡic�ڲ��¶�,2s����һ��,δ���Ժ� */
+/* 获取ic内部温度,2s更新一次,未测试好 */
 void BQ769X0_UpdateDieTemp(void)
 {
 	uint16_t adc_value = 0;
@@ -658,7 +658,7 @@ void BQ769X0_UpdateDieTemp(void)
 }
 
 
-/* �����ܵ��� 250ms����һ�� */
+/* 更新总电流 250ms更新一次 */
 void BQ769X0_UpdateCurrent(void)
 {
 	int32_t temp;
@@ -671,7 +671,7 @@ void BQ769X0_UpdateCurrent(void)
 	temp = Registers.CC.CCByte.CC_HI << 8 | Registers.CC.CCByte.CC_LO;
 
 	//BQ769X0_INFO("current = %d", temp);
-	/*CC Reading (in ��V) = [16-bit 2��s Complement Value] �� (8.44 ��V/LSB) */
+	/*CC Reading (in μV) = [16-bit 2’s Complement Value] × (8.44 μV/LSB) */
 	if(temp & 0x8000)
 	{
 		temp = -((~temp + 1) & 0xFFFF);
@@ -682,7 +682,7 @@ void BQ769X0_UpdateCurrent(void)
 }
 
 
-/* �����ܵ�ѹ 250ms����һ�� */
+/* 更新总电压 250ms更新一次 */
 void BQ769X0_UpadteBatVolt(void)
 {
 	uint16_t adc_value;
@@ -700,7 +700,7 @@ void BQ769X0_UpadteBatVolt(void)
 /*********************************************************************************************/
 
 
-// ��������
+// 报警处理
 static void BQ769X0_AlertHandler(void)
 {
 	uint8_t reg_value = 0, write_value = 0;
@@ -752,7 +752,7 @@ static void BQ769X0_AlertHandler(void)
 }
 
 
-// ��ȡ�����ƫ����
+// 获取增益和偏移量
 void BQ769X0_GetADCGainOffset(void)
 {
 	BQ769X0_ReadRegisterByteWithCRC(ADCGAIN1, &(Registers.ADCGain1.ADCGain1Byte));
@@ -778,21 +778,21 @@ void BQ769X0_GetADCGainOffset(void)
 }
 
 
-// ���üĴ���
+// 配置寄存器
 static void BQ769X0_Configuration(void)
 {
 	unsigned char ReadBuffer[8];
 
-	// ��ADC,ѡ���ⲿNTC
+	// 开ADC,选择外部NTC
 	Registers.SysCtrl1.SysCtrl1Byte = 0x18;
 	
-	// ʹ�ܵ��������������رճ�ŵ�MOS
+	// 使能电流连续采样，关闭充放电MOS
 	Registers.SysCtrl2.SysCtrl2Byte = 0x40;
 
-	// ����CC_CFG,˵����Ҫ���ڳ�ʼ��ʱӦ����Ϊ0X19�Ի�ø��õ�����
+	// 配置CC_CFG,说明书要求在初始化时应配置为0X19以获得更好的性能
 	Registers.CCCfg = 0x19;
 
-	// д�����õ��Ĵ���
+	// 写入配置到寄存器
 	BQ769X0_WriteBlockWithCRC(SYS_CTRL1, &(Registers.SysCtrl1.SysCtrl1Byte), 8);
 	BQ769X0_ReadBlockWithCRC(SYS_CTRL1, ReadBuffer, 8);
 	
@@ -807,7 +807,7 @@ static void BQ769X0_Configuration(void)
 //	BQ769X0_INFO("Read Compare CCCfg 0x%02x 0x%02x", ReadBuffer[7], Registers.CCCfg);
 	
 	
-	// ȥ��BUFF[0]�����λ,��ֹ��Ϊ�����˸���ʹ���ؼ����λ��ûͨ��У��
+	// 去掉BUFF[0]的最高位,防止因为接上了负载使负载检测置位而没通过校验
 	if( (ReadBuffer[0]&0X7F) != Registers.SysCtrl1.SysCtrl1Byte
 	|| ReadBuffer[1] != Registers.SysCtrl2.SysCtrl2Byte
 	|| ReadBuffer[2] != Registers.Protect1.Protect1Byte
@@ -825,12 +825,12 @@ static void BQ769X0_Configuration(void)
 
 
 
-// ����Ƿ���˸���
-// ֻ����ûʹ�ܳ����������CHG���ŵ�ѹ����0.7V�Ż��⵽����
+// 检测是否接了负载
+// 只有在没使能充电的情况下且CHG引脚电压大于0.7V才会检测到负载
 bool BQ769X0_LoadDetect(void)
 {
 	BQ769X0_ReadRegisterWordWithCRC(SYS_CTRL1, (uint16_t *)&Registers.SysCtrl1.SysCtrl1Byte);
-	if (Registers.SysCtrl2.SysCtrl2Bit.CHG_ON == 0) // ���ڳ��״̬��
+	if (Registers.SysCtrl2.SysCtrl2Bit.CHG_ON == 0) // 不在充电状态下
 	{
 		if (Registers.SysCtrl1.SysCtrl1Bit.LOAD_PRESENT)
 		{
@@ -840,18 +840,18 @@ bool BQ769X0_LoadDetect(void)
 	return false;
 }
 
-// ����BQоƬ
+// 唤醒BQ芯片
 void BQ769X0_Wakeup(void)
 {
     BQ769X0_TS1_SetOutMode();
     HAL_GPIO_WritePin(BQ769X0_TS1_GPIO_Port, BQ769X0_TS1_Pin, GPIO_PIN_SET);
     BQ769X0_DELAY(1000);
     HAL_GPIO_WritePin(BQ769X0_TS1_GPIO_Port, BQ769X0_TS1_Pin, GPIO_PIN_RESET);
-    BQ769X0_TS1_SetInMode();  // ��Ϊ����ģʽ����������¶Ȳ���
+    BQ769X0_TS1_SetInMode();  // 设为输入模式，避免干扰温度采样
     BQ769X0_DELAY(1000);
 }
 
-// ����͹���ģʽ
+// 进入低功率模式
 void BQ769X0_EntryShip(void)
 {
 	BQ769X0_WriteRegisterByteWithCRC(SYS_CTRL1, 0x00);
@@ -859,7 +859,7 @@ void BQ769X0_EntryShip(void)
 	BQ769X0_WriteRegisterByteWithCRC(SYS_CTRL1, 0x02);
 }
 
-// ���Ƴ�ŵ翪��
+// 控制充放电开关
 void BQ769X0_ControlDSGOrCHG(BQ769X0_ControlTypedef ControlType, BQ769X0_StateTypedef NewState)
 {
 	if (NewState == BQ_STATE_ENABLE)
@@ -874,7 +874,7 @@ void BQ769X0_ControlDSGOrCHG(BQ769X0_ControlTypedef ControlType, BQ769X0_StateTy
 }
 
 
-// ����ĳ����о����״̬������λ���ڣ�֧��BQ769X0ϵ��(���ڵ�Ԫ����ͬʱ����)
+// 设置某个电芯均衡状态，可以位与多节，支持BQ769X0系列(相邻单元不能同时均衡)
 void BQ769X0_CellBalanceControl(BQ769X0_CellIndexTypedef CellIndex, BQ769X0_StateTypedef NewState)
 {
 	static uint8_t CELL_BAL_VALUE[3] = {0};
@@ -944,26 +944,26 @@ void BQ769X0_OVPThresholdSet(uint16_t OVPThreshold)
 
 
 
-// BQоƬ��ʼ��
+// BQ芯片初始化
 void BQ769X0_Initialize(BQ769X0_InitDataTypedef *InitData)
 {
     //BQ76X0_GpioInit();
 
 
-	// ����˯���ٻ����൱�ڸ�λһ��BQоƬ
+	// 进入睡眠再唤醒相当于复位一次BQ芯片
 	BQ769X0_EntryShip();
 	BQ769X0_DELAY(500);
 	BQ769X0_Wakeup();
 
 
-	// ��ȡ�����ƫ����
+	// 获取增益和偏移量
 	BQ769X0_GetADCGainOffset();
 
 
 	AlertOps = InitData->AlertOps;
 
 
-	// ���üĴ���
+	// 配置寄存器
 	Registers.Protect1.Protect1Bit.SCD_THRESH = SCDThresh;
 	Registers.Protect2.Protect2Bit.OCD_THRESH = OCDThresh;
 	Registers.Protect1.Protect1Bit.SCD_DELAY  = InitData->ConfigData.SCDDelay;	

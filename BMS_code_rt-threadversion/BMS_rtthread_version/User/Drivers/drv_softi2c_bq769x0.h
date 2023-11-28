@@ -38,11 +38,11 @@
 
 /********************************* cell and temp **********************/
 
-// BQ76920	cell :3~5   ÎÂ¶È:1
-// BQ76930	cell :6~10  ÎÂ¶È:2
-// BQ76940	cell :9~15  ÎÂ¶È:3
-#define BQ769X0_CELL_MAX 	BMS_CELL_MAX	// ×î´óÖ§³Ö¶àÉÙ´®
-#define BQ769X0_TMEP_MAX	BMS_TEMP_MAX	// ×î¶à¼¸Â·ÎÂ¶È
+// BQ76920	cell :3~5   æ¸©åº¦:1
+// BQ76930	cell :6~10  æ¸©åº¦:2
+// BQ76940	cell :9~15  æ¸©åº¦:3
+#define BQ769X0_CELL_MAX 	BMS_CELL_MAX	// æœ€å¤§æ”¯æŒå¤šå°‘ä¸²
+#define BQ769X0_TMEP_MAX	BMS_TEMP_MAX	// æœ€å¤šå‡ è·¯æ¸©åº¦
 
 /****************************************************************************/
 
@@ -623,19 +623,19 @@ typedef struct
 }BQ769X0_ConfigDataTypedef;
 
 
-// BQÓ²¼ş±¨¾¯»Øµ÷½Ó¿Ú
+// BQç¡¬ä»¶æŠ¥è­¦å›è°ƒæ¥å£
 typedef struct
 {
-	void (*ocd)(void);		// BQ769X0 ³äµç¹ıÁ÷Ó²¼ş±¨¾¯
-	void (*scd)(void);		// BQ769X0 ·ÅµçµçÂ·Ó²¼ş±¨¾¯
-	void (*ov)(void);		// BQ769X0 ³äµç¹ıÑ¹Ó²¼ş±¨¾¯
-	void (*uv)(void);		// BQ769X0 ·ÅµçÇ·Ñ¹Ó²¼ş±¨¾¯
-	void (*ovrd)(void);		// BQ769X0 ±¨¾¯Òı½ÅÓÉÓÃ»§ÍâÎ§µçÂ·Ç¿ĞĞ´¥·¢
-	void (*device)(void);	// BQ769X0 Éè±¸¹ÊÕÏ±¨¾¯
-	void (*cc)(void);		// BQ769X0 ¿âÂØ¼Æ²ÉÑùÍê³É
+	void (*ocd)(void);		// BQ769X0 å……ç”µè¿‡æµç¡¬ä»¶æŠ¥è­¦
+	void (*scd)(void);		// BQ769X0 æ”¾ç”µç”µè·¯ç¡¬ä»¶æŠ¥è­¦
+	void (*ov)(void);		// BQ769X0 å……ç”µè¿‡å‹ç¡¬ä»¶æŠ¥è­¦
+	void (*uv)(void);		// BQ769X0 æ”¾ç”µæ¬ å‹ç¡¬ä»¶æŠ¥è­¦
+	void (*ovrd)(void);		// BQ769X0 æŠ¥è­¦å¼•è„šç”±ç”¨æˆ·å¤–å›´ç”µè·¯å¼ºè¡Œè§¦å‘
+	void (*device)(void);	// BQ769X0 è®¾å¤‡æ•…éšœæŠ¥è­¦
+	void (*cc)(void);		// BQ769X0 åº“ä»‘è®¡é‡‡æ ·å®Œæˆ
 }BQ769X0_AlertOpsTypedf;
 
-// ³õÊ¼»¯Êı¾İ½á¹¹Ìå
+// åˆå§‹åŒ–æ•°æ®ç»“æ„ä½“
 typedef struct
 {
 	BQ769X0_AlertOpsTypedf AlertOps;
@@ -681,11 +681,11 @@ typedef enum
 
 typedef struct
 {
-	float CellVoltage[BQ769X0_CELL_MAX];	// µ¥½ÚµçĞ¾µçÑ¹
-	float TsxTemperature[BQ769X0_TMEP_MAX];	// ÈÈÃôµç×èÎÂ¶È
-	float BatteryCurrent;	// µç³Ø°ü×ÜµçÁ÷
-	float BatteryVoltage;	// µç³Ø°ü×ÜµçÑ¹
-	float DieTemperature;	// icÎÂ¶È,Ä¿Ç°»¹Î´²âÊÔ³É¹¦
+	float CellVoltage[BQ769X0_CELL_MAX];	// å•èŠ‚ç”µèŠ¯ç”µå‹
+	float TsxTemperature[BQ769X0_TMEP_MAX];	// çƒ­æ•ç”µé˜»æ¸©åº¦
+	float BatteryCurrent;	// ç”µæ± åŒ…æ€»ç”µæµ
+	float BatteryVoltage;	// ç”µæ± åŒ…æ€»ç”µå‹
+	float DieTemperature;	// icæ¸©åº¦,ç›®å‰è¿˜æœªæµ‹è¯•æˆåŠŸ
 }BQ769X0_SampleDataTypedef;
 
 

@@ -1,0 +1,16 @@
+./.rtt-studio/debug\mem.o: ../Middlewares/Third_Party/RealThread_RTOS/src/mem.c
+./.rtt-studio/debug\mem.o: ../Middlewares/Third_Party/RealThread_RTOS/include/rthw.h
+./.rtt-studio/debug\mem.o: ../Middlewares/Third_Party/RealThread_RTOS/include/rtthread.h
+./.rtt-studio/debug\mem.o: ../RT-Thread/rtconfig.h
+./.rtt-studio/debug\mem.o: ../Middlewares/Third_Party/RealThread_RTOS/finsh/finsh_config.h
+./.rtt-studio/debug\mem.o: ../Middlewares/Third_Party/RealThread_RTOS/include/rtdebug.h
+./.rtt-studio/debug\mem.o: ../Middlewares/Third_Party/RealThread_RTOS/include/rtdef.h
+./.rtt-studio/debug\mem.o: F:\MDK5\ARM\ARMCC\Bin\..\include\stdarg.h
+./.rtt-studio/debug\mem.o: ../Middlewares/Third_Party/RealThread_RTOS/include/rtservice.h
+./.rtt-studio/debug\mem.o: ../Middlewares/Third_Party/RealThread_RTOS/finsh/finsh_api.h
+./.rtt-studio/debug\mem.o: ../Middlewares/Third_Party/RealThread_RTOS/finsh/finsh.h
+./.rtt-studio/debug\mem.o: F:\MDK5\ARM\ARMCC\Bin\..\include\stdio.h
+./.rtt-studio/debug\mem.o: F:\MDK5\ARM\ARMCC\Bin\..\include\ctype.h
+./.rtt-studio/debug\mem.o: F:\MDK5\ARM\ARMCC\Bin\..\include\stdlib.h
+./.rtt-studio/debug\mem.o: F:\MDK5\ARM\ARMCC\Bin\..\include\stdint.h
+./.rtt-studio/debug\mem.o: F:\MDK5\ARM\ARMCC\Bin\..\include\string.h

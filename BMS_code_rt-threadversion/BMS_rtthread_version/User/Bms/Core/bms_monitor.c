@@ -89,10 +89,10 @@ static void BMS_MonitorTaskEntry(void *paramter)
 }
 
 
-// ¼à¿Øµç³Ø¸÷ÏîÊı¾İ
+// ç›‘æ§ç”µæ± å„é¡¹æ•°æ®
 static void BMS_MonitorBattery(void)
 {
-	// µ¥ÌåµçĞ¾µçÑ¹
+	// å•ä½“ç”µèŠ¯ç”µå‹
 	CountCellVoltage += MONITOR_TASK_PERIOD;
 	if (FlagCellVoltage == true && CountCellVoltage >= UPDATE_CELL_VOLTAGE_CYCLE)
 	{
@@ -104,7 +104,7 @@ static void BMS_MonitorBattery(void)
 		CountCellVoltage = 0;
 	}
 	
-	// µç³Ø×éµçÑ¹
+	// ç”µæ± ç»„ç”µå‹
 	CountBatVoltage += MONITOR_TASK_PERIOD;
 	if (FlagBatVoltage == true && CountBatVoltage >= UPDAYE_BAT_VOLTAGE_CYCLE)
 	{
@@ -116,7 +116,7 @@ static void BMS_MonitorBattery(void)
 		CountBatVoltage = 0;
 	}
 
-	// µç³ØÎÂ¶È
+	// ç”µæ± æ¸©åº¦
 	CountCellTemp += MONITOR_TASK_PERIOD;
 	if (FlagCellTemp == true && CountCellTemp++ >= UPDATE_CELL_TEMP_CYCLE)
 	{
@@ -129,7 +129,7 @@ static void BMS_MonitorBattery(void)
 	}
 
 
-	/* µçÁ÷²ÉÑùÓÉÈí¼ş´¥·¢ 
+	/* ç”µæµé‡‡æ ·ç”±è½¯ä»¶è§¦å‘ 
 	CountBatCurrent += MONITOR_TASK_PERIOD;
 	if (FlagBatCurrent == true && CountBatCurrent >= UPDATE_BAT_CURRENT_CYCLE)
 	{
@@ -143,7 +143,7 @@ static void BMS_MonitorBattery(void)
 	*/
 
 
-	/* µçÁ÷²ÉÑùÓÉÓ²¼şÖĞ¶Ï´¥·¢,Ì«Âé·³ÁË,Ã¿´ÎÉÕĞ´¶¼µÃÖØĞÂ¸øBQÖØĞÂÏÂÉÏµç */
+	/* ç”µæµé‡‡æ ·ç”±ç¡¬ä»¶ä¸­æ–­è§¦å‘,å¤ªéº»çƒ¦äº†,æ¯æ¬¡çƒ§å†™éƒ½å¾—é‡æ–°ç»™BQé‡æ–°ä¸‹ä¸Šç”µ */
 	if (FlagSampleIntCur == true && FlagBatCurrent == true)
 	{
 		Bms_HalMonitorBatteryCurrent();
@@ -153,11 +153,11 @@ static void BMS_MonitorBattery(void)
 
 
 
-// ÏµÍ³Ä£Ê½¼à¿Ø
-// BatteryCurrent > 20mA || BatteryCurrent < -20mA  ´¦ÓÚ·ÇË¯ÃßÄ£Ê½
-// BatteryCurrent < 20mA || BatteryCurrent > -20mA  ´¦ÓÚ´ı»úÄ£Ê½»òÕßË¯ÃßÄ£Ê½
-// BatteryCurrent <= -20mA ´¦ÓÚ·ÅµçÄ£Ê½
-// BatteryCurrent >=  20mA ´¦ÓÚ³äµçÄ£Ê½
+// ç³»ç»Ÿæ¨¡å¼ç›‘æ§
+// BatteryCurrent > 20mA || BatteryCurrent < -20mA  å¤„äºéç¡çœ æ¨¡å¼
+// BatteryCurrent < 20mA || BatteryCurrent > -20mA  å¤„äºå¾…æœºæ¨¡å¼æˆ–è€…ç¡çœ æ¨¡å¼
+// BatteryCurrent <= -20mA å¤„äºæ”¾ç”µæ¨¡å¼
+// BatteryCurrent >=  20mA å¤„äºå……ç”µæ¨¡å¼
 static void BMS_MonitorSysMode(void)
 {
 	static BMS_SysModeTypedef SysModeBackup = BMS_MODE_NULL;
@@ -167,7 +167,7 @@ static void BMS_MonitorSysMode(void)
 	{
 		if ((BMS_MonitorData.BatteryCurrent >= 0.02) || (BMS_MonitorData.BatteryCurrent <= -0.02))
 		{
-			// ¿ÉÒÔ¼Ó»½ĞÑ´¦ÀíÂß¼­
+			// å¯ä»¥åŠ å”¤é†’å¤„ç†é€»è¾‘
 			
 			BMS_GlobalParam.SysMode = BMS_MODE_STANDBY;
 			BMS_INFO("Wake Up");
@@ -182,10 +182,10 @@ static void BMS_MonitorSysMode(void)
 		
 		if (StandbyCount >= BMS_ENTRY_SLEEP_TIME * 60000)
 		{
-			// Ã»ÓĞµçĞ¾ÕıÔÚ¾ùºâµÄÇé¿öÏÂ²Å½øÈëË¯Ãß
+			// æ²¡æœ‰ç”µèŠ¯æ­£åœ¨å‡è¡¡çš„æƒ…å†µä¸‹æ‰è¿›å…¥ç¡çœ 
 			if (rt_sem_take(BalanceSem, RT_WAITING_NO) == RT_EOK)
 			{
-				// ¿ÉÒÔ¼ÓË¯ÃßµÍ¹¦ºÄ´¦ÀíÂß¼­
+				// å¯ä»¥åŠ ç¡çœ ä½åŠŸè€—å¤„ç†é€»è¾‘
 				
 				StandbyCount = 0;
 				
@@ -202,7 +202,7 @@ static void BMS_MonitorSysMode(void)
 		}
 
 
-		// µ÷ÊÔÓÃ
+		// è°ƒè¯•ç”¨
 		if (SysModeBackup != BMS_MODE_STANDBY)
 		{
 			SysModeBackup = BMS_MODE_STANDBY;
@@ -214,7 +214,7 @@ static void BMS_MonitorSysMode(void)
 		StandbyCount = 0;
 		BMS_GlobalParam.SysMode = BMS_MODE_CHARGE;
 
-		// µ÷ÊÔÓÃ
+		// è°ƒè¯•ç”¨
 		if (SysModeBackup != BMS_MODE_CHARGE)
 		{
 			SysModeBackup = BMS_MODE_CHARGE;
@@ -226,7 +226,7 @@ static void BMS_MonitorSysMode(void)
 		StandbyCount = 0;
 		BMS_GlobalParam.SysMode = BMS_MODE_DISCHARGE;
 
-		// µ÷ÊÔÓÃ
+		// è°ƒè¯•ç”¨
 		if (SysModeBackup != BMS_MODE_DISCHARGE)
 		{
 			SysModeBackup = BMS_MODE_DISCHARGE;

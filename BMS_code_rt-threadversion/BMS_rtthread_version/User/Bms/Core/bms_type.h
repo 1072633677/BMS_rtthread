@@ -48,22 +48,22 @@ typedef enum
 typedef enum
 {
 	BMS_MODE_NULL,
-	BMS_MODE_CHARGE,	// ���ģʽ
-	BMS_MODE_DISCHARGE,	// �ŵ�ģʽ
-	BMS_MODE_STANDBY,	// ����ģʽ
-	BMS_MODE_SLEEP,		// ˯��ģʽ
+	BMS_MODE_CHARGE,	// 充电模式
+	BMS_MODE_DISCHARGE,	// 放电模式
+	BMS_MODE_STANDBY,	// 待机模式
+	BMS_MODE_SLEEP,		// 睡眠模式
 }BMS_SysModeTypedef;
 
 
 typedef struct
 {
-	BMS_SysModeTypedef SysMode;	// ��ǰϵͳ����ʲôģʽ
-	BMS_StateTypedef Charge;	// ���״̬
-	BMS_StateTypedef Discharge;	// �ŵ�״̬
-	BMS_StateTypedef Balance;	// ����״̬
+	BMS_SysModeTypedef SysMode;	// 当前系统处于什么模式
+	BMS_StateTypedef Charge;	// 充电状态
+	BMS_StateTypedef Discharge;	// 放电状态
+	BMS_StateTypedef Balance;	// 均衡状态
 	
-	uint8_t Cell_Real_Number;	// ��оʵʱ����
-	uint8_t Temp_Real_Number;	// �¶�ʵʱ����
+	uint8_t Cell_Real_Number;	// 电芯实时数量
+	uint8_t Temp_Real_Number;	// 温度实时数量
 }BMS_GlobalParamTypedef;
 
 

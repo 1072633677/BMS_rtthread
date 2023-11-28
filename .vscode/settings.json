@@ -1,0 +1,10 @@
+{
+    "files.associations": {
+        "*.vue": "vue",
+        "*.wpy": "vue",
+        "*.wxml": "html",
+        "*.wxss": "css",
+        "main.h": "c",
+        "bms_hal_control.h": "c"
+    }
+}

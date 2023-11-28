@@ -56,7 +56,7 @@ void BMS_CommInit(void)
 }
 
 
-/* Ä¿Ç°Î´Ö§³Ö£¬´ıºóĞøÖ§³Ö */
+/* ç›®å‰æœªæ”¯æŒï¼Œå¾…åç»­æ”¯æŒ */
 static void BMS_CommTaskEntry(void *paramter)
 {
 	while(1)

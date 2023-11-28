@@ -9,19 +9,19 @@
 
 typedef struct
 {
-	float CellVoltage; 		// µçĞ¾µçÑ¹
-	uint32_t CellNumber;	// µçĞ¾µÄ±àºÅ
+	float CellVoltage; 		// ç”µèŠ¯ç”µå‹
+	uint32_t CellNumber;	// ç”µèŠ¯çš„ç¼–å·
 }BMS_CellDataTypedef;
 
 
 typedef struct
 {
-	float CellTemp[BMS_TEMP_MAX];					// ²ÉÑùÎÂ¶È,ÎÂ¶ÈÊı¾İ»á´ÓĞ¡µ½´óÅÅĞò
-	float BatteryVoltage;							// µç³Ø×ÜµçÑ¹
-	float BatteryCurrent;							// µç³Ø×éµçÁ÷
-	BMS_CellDataTypedef CellData[BMS_CELL_MAX]; 	// µçĞ¾Êı¾İ,µçÑ¹Êı¾İ»á´ÓĞ¡µ½´óÅÅĞò
-	float CellVoltage[BMS_CELL_MAX]; 				// µçĞ¾µçÑ¹,Î´ÅÅĞòµÄ
-	uint32_t CellTempEffectiveNumber;				// ÓĞĞ§ÖµµÄÎÂ¶ÈÊıÁ¿
+	float CellTemp[BMS_TEMP_MAX];					// é‡‡æ ·æ¸©åº¦,æ¸©åº¦æ•°æ®ä¼šä»å°åˆ°å¤§æ’åº
+	float BatteryVoltage;							// ç”µæ± æ€»ç”µå‹
+	float BatteryCurrent;							// ç”µæ± ç»„ç”µæµ
+	BMS_CellDataTypedef CellData[BMS_CELL_MAX]; 	// ç”µèŠ¯æ•°æ®,ç”µå‹æ•°æ®ä¼šä»å°åˆ°å¤§æ’åº
+	float CellVoltage[BMS_CELL_MAX]; 				// ç”µèŠ¯ç”µå‹,æœªæ’åºçš„
+	uint32_t CellTempEffectiveNumber;				// æœ‰æ•ˆå€¼çš„æ¸©åº¦æ•°é‡
 }BMS_MonitorDataTypedef;
 
 

@@ -1,0 +1,10 @@
+./.rtt-studio/debug\timer.o: ../Middlewares/Third_Party/RealThread_RTOS/src/timer.c
+./.rtt-studio/debug\timer.o: ../Middlewares/Third_Party/RealThread_RTOS/include/rtthread.h
+./.rtt-studio/debug\timer.o: ../RT-Thread/rtconfig.h
+./.rtt-studio/debug\timer.o: ../Middlewares/Third_Party/RealThread_RTOS/finsh/finsh_config.h
+./.rtt-studio/debug\timer.o: ../Middlewares/Third_Party/RealThread_RTOS/include/rtdebug.h
+./.rtt-studio/debug\timer.o: ../Middlewares/Third_Party/RealThread_RTOS/include/rtdef.h
+./.rtt-studio/debug\timer.o: F:\MDK5\ARM\ARMCC\Bin\..\include\stdarg.h
+./.rtt-studio/debug\timer.o: ../Middlewares/Third_Party/RealThread_RTOS/include/rtservice.h
+./.rtt-studio/debug\timer.o: ../Middlewares/Third_Party/RealThread_RTOS/finsh/finsh_api.h
+./.rtt-studio/debug\timer.o: ../Middlewares/Third_Party/RealThread_RTOS/include/rthw.h

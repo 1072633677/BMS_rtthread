@@ -18,7 +18,7 @@
 
 void BMS_SysInitialize(void)
 {
-	BQ769X0_InitDataTypedef InitData;
+	BQ769X0_InitDataTypedef InitData;  
 
 	InitData.AlertOps.ocd 	 = BMS_ProtectHwOCD;
 	InitData.AlertOps.scd 	 = BMS_ProtectHwSCD;
