@@ -5,7 +5,7 @@ BMS功能：管理多节锂电池组成的电池包，实现充放电管理，�
 池，原版代码只有SOH部分。
 
 
-业务逻辑如下：
+业务逻辑如下：0
 
 BMS_MonitorInit();				// 电池监控初始化      
 创建一个任务BMS_MonitorTaskEntry
